@@ -2,12 +2,12 @@ import { GridColDef } from '@mui/x-data-grid'
 
 export const columns: GridColDef[] = [
   {
-    field: 'socioID',
+    field: 'nombreSocio',
     flex: 3,
     headerName: 'Socio',
   },
   {
-    field: 'profesionalID',
+    field: 'nombreProfesional',
     flex: 3,
     headerName: 'Profesional',
   },
