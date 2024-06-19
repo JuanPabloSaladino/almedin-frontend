@@ -1,4 +1,6 @@
 import { GridColDef } from '@mui/x-data-grid'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 export const columns: GridColDef[] = [
   {
@@ -20,5 +22,15 @@ export const columns: GridColDef[] = [
     field: 'fechaTurno',
     flex: 2,
     headerName: 'Fecha',
+  },
+  {
+    field: 'disponible',
+    flex: 1,
+    headerName: 'Disponible',
+    renderCell: (params) => {
+      const isDisponible = params.row.socioID
+
+      return !isDisponible ? <CheckCircleIcon color="success"/> : <RemoveCircleIcon color="error"/>
+    }
   }
 ]
