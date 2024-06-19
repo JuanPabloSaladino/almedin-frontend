@@ -9,5 +9,6 @@ export interface ITurno {
   fechaTurno: string,
   profesionalID: string,
   socioID: string,
-  motivoDeConsultaTurno: string
+  motivoDeConsultaTurno: string,
+  id: string
 }

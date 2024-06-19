@@ -1,13 +1,13 @@
 import { DataGrid } from '@mui/x-data-grid'
-import { columns } from './Table.constants'
 import * as React from 'react'
-import { IEspecialista } from '../../types'
+import { ITurno } from '../../types'
+import { columns } from '../TurnosTable/TurnosTable.constants'
 
 export interface Props {
-  rows: IEspecialista[]
+  rows: ITurno[]
 }
 
-export const Table: React.FC<Props> = ({ rows }) => {
+export const TurnosTable: React.FC<Props> = ({ rows }) => {
 
   return (
     <>

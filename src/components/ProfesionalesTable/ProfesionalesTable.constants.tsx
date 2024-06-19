@@ -3,12 +3,12 @@ import { GridColDef } from '@mui/x-data-grid'
 export const columns: GridColDef[] = [
   {
     field: 'nombreMedico',
-    flex: 4,
+    flex: 3,
     headerName: 'Nombre',
   },
   {
     field: 'especialidad',
-    flex: 5,
+    flex: 3,
     headerName: 'Especialidad',
   },
   {
@@ -18,7 +18,7 @@ export const columns: GridColDef[] = [
   },
   {
     field: 'horarios',
-    flex: 3,
+    flex: 2,
     headerName: 'Horarios',
   }
 ]
