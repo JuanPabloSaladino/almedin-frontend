@@ -7,6 +7,11 @@ export const TurnosAPI = {
             .get(`http://localhost:8080/turnos`)
             .then((response: AxiosResponse<ITurno[]>) => response.data)
     },
+    getTurnoByID: (id: string) => {
+        return axios
+            .get(`http://localhost:8080/turnos/${ id }`)
+            .then((response: AxiosResponse<ITurno>) => response.data)
+    },
     deleteTurnos: (id: string) => {
         return axios
             .delete(`http://localhost:8080/turnos/${ id }`)
