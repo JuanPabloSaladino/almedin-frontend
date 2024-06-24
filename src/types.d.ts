@@ -1,4 +1,5 @@
 export interface IEspecialista {
+  id: number,
   nombreMedico: string,
   especialidad: string,
   horarios: string[],
@@ -7,8 +8,8 @@ export interface IEspecialista {
 
 export interface ITurno {
   fechaTurno: string,
-  profesionalID: string,
-  socioID: string,
+  profesionalID: number,
+  socioID: number,
   motivoDeConsultaTurno: string,
-  ID: string
+  id: number
 }

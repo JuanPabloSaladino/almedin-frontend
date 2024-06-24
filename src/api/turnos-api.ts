@@ -17,7 +17,7 @@ export const TurnosAPI = {
             .delete(`http://localhost:8080/turnos/${ id }`)
             .then((response: AxiosResponse<string>) => response.data)
     },
-    updateTurno: (id: string, turno: ITurno) => {
+    updateTurno: (id: number, turno: ITurno) => {
         return axios
             .put(`http://localhost:8080/turnos/${ id }`, turno)
             .then((response: AxiosResponse<ITurno>) => response.data)

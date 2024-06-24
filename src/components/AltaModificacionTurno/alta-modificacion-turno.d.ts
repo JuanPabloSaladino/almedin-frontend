@@ -1,12 +1,12 @@
 import { ITurno } from '../../types'
+import { Dayjs } from 'dayjs'
 
 export interface IFormInitialValues {
   socioID: string
-  nombreSocio: string
-  fechaTurno: string
-  nombreProfesional: string
+  profesionalID: number
+  fechaTurno: Dayjs | null
   motivoDeConsultaTurno: string
-  ID: string
+  id: number
 }
 
 export interface Props {
@@ -15,5 +15,6 @@ export interface Props {
   handleCloseDialog: () => void
   handleSubmit: (turno: ITurno) => void
   openDialog: boolean
-  setFieldValue?: (field: string, value) => void
+  setFieldValue?: (field: string, value) => void,
+  selectedIdRow?: string
 }

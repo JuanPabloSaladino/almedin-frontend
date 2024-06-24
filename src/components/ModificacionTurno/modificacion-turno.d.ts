@@ -9,9 +9,9 @@ export interface Props {
 
 export interface IFormInitialValues {
   socioID: string
+  profesionalID: number
   nombreSocio: string
-  fechaTurno: string
-  nombreProfesional: string
+  fechaTurno: Dayjs | null
   motivoDeConsultaTurno: string
-  ID: string
+  id: number
 }

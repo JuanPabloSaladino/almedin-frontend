@@ -2,11 +2,10 @@ import { IFormInitialValues } from './alta-modificacion-turno'
 
 export const initialValues: IFormInitialValues = {
   socioID: '',
-  nombreSocio: '',
-  fechaTurno: '',
-  nombreProfesional: '',
+  profesionalID: 0,
+  fechaTurno: null,
   motivoDeConsultaTurno: '',
-  ID: ''
+  id: 0
 }
 
 export const style = {
