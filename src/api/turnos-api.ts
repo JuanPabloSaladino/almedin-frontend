@@ -21,5 +21,10 @@ export const TurnosAPI = {
         return axios
             .put(`http://localhost:8080/turnos/${ id }`, turno)
             .then((response: AxiosResponse<ITurno>) => response.data)
+    },
+    createTurno: (turno: ITurno) => {
+        return axios
+            .post('http://localhost:8080/turnos', turno)
+            .then((response: AxiosResponse<ITurno>) => response.data)
     }
 }

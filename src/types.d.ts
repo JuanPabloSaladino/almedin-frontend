@@ -13,3 +13,9 @@ export interface ITurno {
   motivoDeConsultaTurno: string,
   id: number
 }
+
+export interface ISocio {
+  nombre: string,
+  email: string,
+  id: number
+}

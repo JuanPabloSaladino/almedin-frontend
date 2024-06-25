@@ -1,12 +1,14 @@
 import { DataGrid, GridRowSelectionModel } from '@mui/x-data-grid'
 import { ClickAwayListener, Grid } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
+import AddIcon from '@mui/icons-material/Add';
 import { TableButton } from '../TableButton/TableButton'
 import * as React from 'react'
 import { ITurno } from '../../types'
 import { columns } from '../TurnosTable/TurnosTable.constants'
 import { useState } from 'react'
 import { ModificacionTurno } from '../ModificacionTurno/ModificacionTurno'
+import { AltaTurno } from '../AltaTurno/AltaTurno'
 
 export interface Props {
   rows: ITurno[]
@@ -34,6 +36,16 @@ export const TurnosTable: React.FC<Props> = ({ rows }) => {
               marginTop={ 5 }
               spacing={ 1 }
           >
+            <Grid item>
+              <TableButton
+                color="success"
+                onClose={ () => setSelectedIdRow('') }
+                modal={ AltaTurno }
+                selectedIdRow={ selectedIdRow }
+              >
+                <AddIcon color={ 'success' }/>
+              </TableButton>
+            </Grid>
             <Grid item>
               <TableButton
                 color="warning"

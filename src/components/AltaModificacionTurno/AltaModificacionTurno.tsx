@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
@@ -9,7 +9,7 @@ import { FormHelperText, MenuItem, Select, TextField } from '@mui/material'
 import { Form, FormikConfig, FormikProvider, useFormik } from 'formik'
 import { IFormInitialValues, Props } from './alta-modificacion-turno'
 import { initialValues, style } from './AltaModificacionTurno.constants'
-import { IEspecialista, ITurno } from '../../types'
+import { IEspecialista, ISocio, ITurno } from '../../types'
 import { TurnosAPI } from '../../api/turnos-api'
 
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -17,6 +17,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { EspecialistasAPI } from '../../api/especialistas-api'
+import { SociosAPI } from '../../api/socios-api'
 
 export const AltaModificacionTurno: React.FC<Props> = ({
                                                        handleCloseDialog,
@@ -28,7 +29,9 @@ export const AltaModificacionTurno: React.FC<Props> = ({
                                                      }) => {
   const [turnoEspecialista, setTurnoEspecialista] = useState<Dayjs>( dayjs() )
   const [turno, setTurno] = useState<ITurno>()
-  const [profesionales, setProfesionales] = useState<IEspecialista[]>()
+  const [profesionales, setProfesionales] = useState<IEspecialista[]>([]);
+  const [socios, setSocios] = useState<ISocio[]>([]);
+  const [profesionalSeleccionado, setProfesionalSeleccionado] = useState<IEspecialista | null>()
 
   const formikProps: FormikConfig<IFormInitialValues> = {
     enableReinitialize: true,
@@ -84,6 +87,24 @@ export const AltaModificacionTurno: React.FC<Props> = ({
     }
   }, [selectedIdRow])
 
+  useEffect(() => {
+    EspecialistasAPI
+      .getEspecialistas()
+      .then((especialistas: IEspecialista[]) => setProfesionales(especialistas))
+
+      SociosAPI
+        .getSocios()
+        .then((sociosListados: SetStateAction<ISocio[]>) => setSocios(sociosListados))
+  }, [])
+
+  useEffect(() => {
+    if(!!formik.values.profesionalID){
+      EspecialistasAPI
+        .getEspecialistaByID(formik.values.profesionalID)
+        .then(especialista => console.log(especialista))
+    }
+  }, [formik.values.profesionalID])
+
   return (
       <>
         <Dialog
@@ -110,16 +131,20 @@ export const AltaModificacionTurno: React.FC<Props> = ({
                     onChange={ formik.handleChange }
                     value={ formik.values.motivoDeConsultaTurno }
                 />
-                <TextField
-                    fullWidth
-                    label="socioID"
-                    name="socioID"
-                    margin="dense"
-                    variant="outlined"
-                    onChange={ formik.handleChange }
-                    value={ formik.values.socioID }
-                    style={{ display: 'none' }}
-                />
+                <Select
+                  fullWidth
+                  label="socioID"
+                  name="socioID"
+                  onChange={ formik.handleChange }
+                  value={ formik.values.socioID }
+                  sx={{ marginY: 1 }}
+                >
+                  {
+                    socios?.map(socio => 
+                      <MenuItem key={ socio.id } value={ socio.id }>{ socio.nombre }</MenuItem>
+                    )
+                  }
+                </Select>
                 <Select
                   fullWidth
                   label="profesionalID"
