@@ -32,6 +32,7 @@ export const AltaModificacionTurno: React.FC<Props> = ({
   const [turno, setTurno] = useState<ITurno>()
   const [profesionales, setProfesionales] = useState<IEspecialista[]>([]);
   const [socios, setSocios] = useState<ISocio[]>([]);
+  const [turnoCancelado, setTurnoCancelado] = useState<boolean>(false);
 
   const { setTurnos } = useContext(AppContext) 
 
@@ -59,6 +60,14 @@ export const AltaModificacionTurno: React.FC<Props> = ({
   const handleSubmitData = (turno: ITurno) => {
     handleSubmit(turno)
   }
+
+  const toggleCancelado = () => {
+    const newCanceladoValue = !turnoCancelado;
+
+    setTurnoCancelado(newCanceladoValue);
+    
+    formik.setFieldValue('cancelado', newCanceladoValue);
+  };
 
   const disableDays = (date: Dayjs) => {
     return !date.isSame(turnoEspecialista, 'day');
@@ -104,14 +113,6 @@ export const AltaModificacionTurno: React.FC<Props> = ({
         .getSocios()
         .then((sociosListados: SetStateAction<ISocio[]>) => setSocios(sociosListados))
   }, [])
-
-/*   useEffect(( ) => {
-    if(!!formik.values.profesionalID){
-      EspecialistasAPI
-        .getEspecialistaByID(formik.values.profesionalID)
-        .then(especialista => console.log(especialista))
-    }
-  }, [formik.values.profesionalID]) */
 
   return (
       <>
@@ -183,24 +184,24 @@ export const AltaModificacionTurno: React.FC<Props> = ({
                   }
                 </FormHelperText>
               </DialogContent>
-              <DialogActions sx={ style }>
-                <Button
-                    color="inherit"
-                    onClick={ handleCloseDialog }
-                    size="small"
-                    variant="outlined"
-                >
+              <DialogActions sx={style}>
+                <Button color="inherit" onClick={handleCloseDialog} size="small" variant="outlined">
                   Cancelar
                 </Button>
-                <Button
-                    color="success"
-                    size="small"
-                    type="submit"
-                    variant="contained"
-                >
+                <Button color="success" size="small" type="submit" variant="contained">
                   Guardar
                 </Button>
-              </DialogActions>
+                {
+                  !!turno &&
+                  <Button
+                    color={turnoCancelado ? 'info' : 'error'}
+                    size="small"
+                    onClick={toggleCancelado}
+                  >
+                    {turnoCancelado ? 'No cancelar' : 'Cancelar'}
+                  </Button>
+                }
+            </DialogActions>
             </Form>
           </FormikProvider>
         </Dialog>

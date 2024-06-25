@@ -12,6 +12,7 @@ export interface ITurno {
   socioID: number,
   motivoDeConsultaTurno: string,
   id: number
+  cancelado: boolean
 }
 
 export interface ISocio {

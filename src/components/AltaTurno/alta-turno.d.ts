@@ -13,5 +13,6 @@ export interface IFormInitialValues {
   nombreSocio: string
   fechaTurno: Dayjs | null
   motivoDeConsultaTurno: string
-  id: number
+  id: number,
+  cancelado: boolean
 }

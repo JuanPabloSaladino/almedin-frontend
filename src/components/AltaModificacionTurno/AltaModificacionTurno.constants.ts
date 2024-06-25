@@ -5,7 +5,8 @@ export const initialValues: IFormInitialValues = {
   profesionalID: 0,
   fechaTurno: null,
   motivoDeConsultaTurno: '',
-  id: 0
+  id: 0,
+  cancelado: false
 }
 
 export const style = {

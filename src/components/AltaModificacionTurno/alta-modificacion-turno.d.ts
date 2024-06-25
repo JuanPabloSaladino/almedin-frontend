@@ -7,6 +7,7 @@ export interface IFormInitialValues {
   fechaTurno: Dayjs | null
   motivoDeConsultaTurno: string
   id: number
+  cancelado: boolean
 }
 
 export interface Props {
