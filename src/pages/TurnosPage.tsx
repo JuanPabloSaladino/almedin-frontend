@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { TurnosTable } from "../components/TurnosTable/TurnosTable"
 import { TurnosAPI } from "../api/turnos-api"
 import { ITurno } from "../types"
 import AppBarComponent from "../components/AppBarComponent/AppBarComponent"
+import { AppContext } from "../context/AppContext"
 
 const TurnosPage: React.FC = () => {
     const [turnos, setTurnos] = useState<ITurno[]>([])
+
+    const { turnos: turnosContext} = useContext(AppContext) 
 
     useEffect(() => {
       TurnosAPI
@@ -13,7 +16,7 @@ const TurnosPage: React.FC = () => {
           .then((turnos: ITurno[]) => {
             setTurnos(turnos)
           })
-    }, [])
+    }, [turnosContext])
 
     return (
         <>

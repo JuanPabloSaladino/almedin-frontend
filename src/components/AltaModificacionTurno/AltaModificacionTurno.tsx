@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from 'react'
+import { SetStateAction, useContext, useEffect, useState } from 'react'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
@@ -18,6 +18,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { EspecialistasAPI } from '../../api/especialistas-api'
 import { SociosAPI } from '../../api/socios-api'
+import { AppContext } from '../../context/AppContext'
 
 export const AltaModificacionTurno: React.FC<Props> = ({
                                                        handleCloseDialog,
@@ -31,7 +32,8 @@ export const AltaModificacionTurno: React.FC<Props> = ({
   const [turno, setTurno] = useState<ITurno>()
   const [profesionales, setProfesionales] = useState<IEspecialista[]>([]);
   const [socios, setSocios] = useState<ISocio[]>([]);
-  const [profesionalSeleccionado, setProfesionalSeleccionado] = useState<IEspecialista | null>()
+
+  const { setTurnos } = useContext(AppContext) 
 
   const formikProps: FormikConfig<IFormInitialValues> = {
     enableReinitialize: true,
@@ -43,6 +45,11 @@ export const AltaModificacionTurno: React.FC<Props> = ({
       }
 
       handleSubmitData(values);
+
+      TurnosAPI
+        .getTurnos()
+        .then((turnos) => setTurnos(turnos))
+
       handleCloseDialog();
     }
   }
@@ -78,7 +85,7 @@ export const AltaModificacionTurno: React.FC<Props> = ({
     
   }, [turno])
 
-  useEffect(() => {
+  useEffect(( ) => {
     if(selectedIdRow){
       TurnosAPI
         .getTurnoByID(selectedIdRow)
@@ -88,7 +95,7 @@ export const AltaModificacionTurno: React.FC<Props> = ({
     }
   }, [selectedIdRow])
 
-  useEffect(() => {
+  useEffect(( ) => {
     EspecialistasAPI
       .getEspecialistas()
       .then((especialistas: IEspecialista[]) => setProfesionales(especialistas))
@@ -98,13 +105,13 @@ export const AltaModificacionTurno: React.FC<Props> = ({
         .then((sociosListados: SetStateAction<ISocio[]>) => setSocios(sociosListados))
   }, [])
 
-  useEffect(() => {
+/*   useEffect(( ) => {
     if(!!formik.values.profesionalID){
       EspecialistasAPI
         .getEspecialistaByID(formik.values.profesionalID)
         .then(especialista => console.log(especialista))
     }
-  }, [formik.values.profesionalID])
+  }, [formik.values.profesionalID]) */
 
   return (
       <>
@@ -151,7 +158,7 @@ export const AltaModificacionTurno: React.FC<Props> = ({
                   label="profesionalID"
                   name="profesionalID"
                   onChange={ formik.handleChange }
-                  value={ formik.values.profesionalID }
+                  value={ formik.values.profesionalID || '' }
                   sx={{ marginY: 1 }}
                 >
                   {
