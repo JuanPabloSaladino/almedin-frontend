@@ -69,6 +69,7 @@ export const AltaModificacionTurno: React.FC<Props> = ({
         formik.setFieldValue('socioID', turno.socioID)
         formik.setFieldValue('profesionalID', turno.profesionalID)
         formik.setFieldValue('id', selectedIdRow)
+        formik.setFieldValue('motivoDeConsultaTurno', turno.motivoDeConsultaTurno)
 
         EspecialistasAPI
           .getEspecialistas()

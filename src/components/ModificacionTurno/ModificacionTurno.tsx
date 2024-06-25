@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AltaModificacionTurno } from '../AltaModificacionTurno/AltaModificacionTurno'
 import { IFormInitialValues, Props } from './modificacion-turno'
 import { ITurno } from '../../types'
 import { TurnosAPI } from '../../api/turnos-api'
+import dayjs from 'dayjs'
 
 export const ModificacionTurno: React.FC<Props> = ({
                                                    handleCloseDialog,
@@ -10,6 +11,10 @@ export const ModificacionTurno: React.FC<Props> = ({
                                                    selectedIdRow,
                                                  }) => {
   const [initialFormValues, setInitialFormValues] = useState<IFormInitialValues>({} as IFormInitialValues)
+
+  useEffect(( ) => {
+    console.log('Hola')
+  }, [])
 
   const handleUpdate = (turno: ITurno) => {    
     TurnosAPI.updateTurno(turno.id, turno)

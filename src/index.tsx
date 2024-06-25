@@ -5,7 +5,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css';
-import App from './App';
 import TurnosPage from './pages/TurnosPage';
 import EspecialistasPage from './pages/EspecialistasPage';
 
@@ -16,15 +15,15 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <TurnosPage />
   },
   {
     path: "/turnos",
-    element: <TurnosPage />,
+    element: <TurnosPage />
   },
   {
     path: "/especialistas",
-    element: <EspecialistasPage />,
+    element: <EspecialistasPage />
   }
 ]);
 
