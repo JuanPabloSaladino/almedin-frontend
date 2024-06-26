@@ -185,11 +185,21 @@ export const AltaModificacionTurno: React.FC<Props> = ({
                 </FormHelperText>
               </DialogContent>
               <DialogActions sx={style}>
-                <Button color="inherit" onClick={handleCloseDialog} size="small" variant="outlined">
-                  Cancelar
+                <Button
+                  color="inherit"
+                  onClick={handleCloseDialog}
+                  size="small"
+                  variant="contained"
+                  >
+                    Salir
                 </Button>
-                <Button color="success" size="small" type="submit" variant="contained">
-                  Guardar
+                <Button
+                  color="success"
+                  size="small"
+                  type="submit"
+                  variant="contained"
+                  >
+                    Guardar
                 </Button>
                 {
                   !!turno &&
@@ -197,8 +207,9 @@ export const AltaModificacionTurno: React.FC<Props> = ({
                     color={turnoCancelado ? 'info' : 'error'}
                     size="small"
                     onClick={toggleCancelado}
+                    variant="contained"
                   >
-                    {turnoCancelado ? 'No cancelar' : 'Cancelar'}
+                    {turnoCancelado ? 'No cancelar' : 'Cancelar turno'}
                   </Button>
                 }
             </DialogActions>
