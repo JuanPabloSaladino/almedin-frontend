@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
 
-import { FormHelperText, MenuItem, Select, TextField } from '@mui/material'
+import { FormHelperText, Grid, MenuItem, Select, TextField } from '@mui/material'
 import { Form, FormikConfig, FormikProvider, useFormik } from 'formik'
 import { IFormInitialValues, Props } from './alta-modificacion-turno'
 import { initialValues, style } from './AltaModificacionTurno.constants'
@@ -112,107 +112,92 @@ export const AltaModificacionTurno: React.FC<Props> = ({
   }, [])
 
   return (
-      <>
-        <Dialog
-            fullWidth={ true }
-            maxWidth="sm"
-            open={ openDialog }
-            onClose={ () => {
-              formik.resetForm()
-              handleCloseDialog()
-            } }
-        >
-          <DialogTitle sx={ style }>{ title }</DialogTitle>
-          <FormikProvider value={ formik }>
-            <Form noValidate>
-              <DialogContent sx={ style }>
-                <TextField
+    <>
+      <Dialog fullWidth maxWidth="sm" open={openDialog} onClose={() => { formik.resetForm(); handleCloseDialog(); }}>
+        <DialogTitle sx={style}>{title}</DialogTitle>
+        <FormikProvider value={formik}>
+          <Form noValidate>
+            <DialogContent sx={style}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
                     fullWidth
                     label="Motivo de consulta"
                     name="motivoDeConsultaTurno"
                     margin="dense"
                     multiline
-                    rows={ 2 }
+                    rows={2}
                     variant="outlined"
-                    onChange={ formik.handleChange }
-                    value={ formik.values.motivoDeConsultaTurno }
-                />
-                <Select
-                  fullWidth
-                  label="socioID"
-                  name="socioID"
-                  onChange={ formik.handleChange }
-                  value={ formik.values.socioID }
-                  sx={{ marginY: 1 }}
-                >
-                  {
-                    socios?.map(socio => 
-                      <MenuItem key={ socio.id } value={ socio.id }>{ socio.nombre }</MenuItem>
-                    )
-                  }
-                </Select>
-                <Select
-                  fullWidth
-                  label="profesionalID"
-                  name="profesionalID"
-                  onChange={ formik.handleChange }
-                  value={ formik.values.profesionalID || '' }
-                  sx={{ marginY: 1 }}
-                >
-                  {
-                    profesionales?.map(profesional => 
-                      <MenuItem key={ profesional.id } value={ profesional.id }>{ profesional.nombreMedico }</MenuItem>
-                    )
-                  }
-                </Select>
-                <LocalizationProvider dateAdapter={ AdapterDayjs }>
-                  <DesktopDatePicker
-                    label="Fecha del turno"
-                    onChange={(date) => formik.setFieldValue('fechaTurno', date)}
-                    value={ formik.values.fechaTurno }
-                    shouldDisableDate={ disableDays }
+                    onChange={formik.handleChange}
+                    value={formik.values.motivoDeConsultaTurno}
                   />
-                </LocalizationProvider>
-                <FormHelperText
-                  error
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Select
+                    fullWidth
+                    label="Socio"
+                    name="socioID"
+                    onChange={formik.handleChange}
+                    value={formik.values.socioID}
+                  >
+                    {socios?.map((socio) => (
+                      <MenuItem key={socio.id} value={socio.id}>
+                        {socio.nombre}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Select
+                    fullWidth
+                    label="Profesional"
+                    name="profesionalID"
+                    onChange={formik.handleChange}
+                    value={formik.values.profesionalID || ''}
+                  >
+                    {profesionales?.map((profesional) => (
+                      <MenuItem key={profesional.id} value={profesional.id}>
+                        {profesional.nombreMedico}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
+                <Grid item xs={12}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                      label="Fecha del turno"
+                      value={formik.values.fechaTurno}
+                      onChange={(date) => formik.setFieldValue('fechaTurno', date)}
+                      shouldDisableDate={disableDays}
+                    />
+                  </LocalizationProvider>
+                  {formik.errors.fechaTurno && (
+                    <FormHelperText error>{'Ingrese una fecha válida para el turno'}</FormHelperText>
+                  )}
+                </Grid>
+              </Grid>
+            </DialogContent>
+            <DialogActions sx={style}>
+              <Button color="inherit" onClick={handleCloseDialog} size="small" variant="contained">
+                Salir
+              </Button>
+              <Button color="success" size="small" type="submit" variant="contained">
+                Guardar
+              </Button>
+              {!!turno && (
+                <Button
+                  color={formik.values.cancelado ? 'info' : 'error'}
+                  size="small"
+                  onClick={toggleCancelado}
+                  variant="contained"
                 >
-                  { 
-                    (formik.errors.fechaTurno && 'Ingrese una fecha válida para el turno')
-                  }
-                </FormHelperText>
-              </DialogContent>
-              <DialogActions sx={style}>
-                <Button
-                  color="inherit"
-                  onClick={handleCloseDialog}
-                  size="small"
-                  variant="contained"
-                  >
-                    Salir
+                  {formik.values.cancelado ? 'Habilitar' : 'Cancelar'}
                 </Button>
-                <Button
-                  color="success"
-                  size="small"
-                  type="submit"
-                  variant="contained"
-                  >
-                    Guardar
-                </Button>
-                {
-                  !!turno &&
-                  <Button
-                    color={ formik.values.cancelado ? 'info' : 'error' }
-                    size="small"
-                    onClick={ toggleCancelado }
-                    variant="contained"
-                  >
-                    { formik.values.cancelado ? 'Habilitar' : 'Cancelar' }
-                  </Button>
-                }
+              )}
             </DialogActions>
-            </Form>
-          </FormikProvider>
-        </Dialog>
-      </>
+          </Form>
+        </FormikProvider>
+      </Dialog>
+    </>
   )
 }
