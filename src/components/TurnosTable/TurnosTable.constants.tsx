@@ -32,5 +32,15 @@ export const columns: GridColDef[] = [
 
       return !isDisponible ? <CheckCircleIcon color="success"/> : <RemoveCircleIcon color="error"/>
     }
+  },
+  {
+    field: 'cancelado',
+    flex: 1,
+    headerName: 'Habilitado',
+    renderCell: (params) => {
+      const isCancelado = params.row.cancelado
+
+      return !isCancelado ? <CheckCircleIcon color="success"/> : <RemoveCircleIcon color="error"/>
+    }
   }
 ]

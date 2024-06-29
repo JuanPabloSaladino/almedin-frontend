@@ -32,7 +32,6 @@ export const AltaModificacionTurno: React.FC<Props> = ({
   const [turno, setTurno] = useState<ITurno>()
   const [profesionales, setProfesionales] = useState<IEspecialista[]>([]);
   const [socios, setSocios] = useState<ISocio[]>([]);
-  const [turnoCancelado, setTurnoCancelado] = useState<boolean>(false);
 
   const { setTurnos } = useContext(AppContext) 
 
@@ -62,12 +61,9 @@ export const AltaModificacionTurno: React.FC<Props> = ({
   }
 
   const toggleCancelado = () => {
-    const newCanceladoValue = !turnoCancelado;
-
-    setTurnoCancelado(newCanceladoValue);
-    
-    formik.setFieldValue('cancelado', newCanceladoValue);
+    formik.setFieldValue('cancelado', !formik.values.cancelado);
   };
+  
 
   const disableDays = (date: Dayjs) => {
     return !date.isSame(turnoEspecialista, 'day');
@@ -86,6 +82,7 @@ export const AltaModificacionTurno: React.FC<Props> = ({
         formik.setFieldValue('profesionalID', turno.profesionalID)
         formik.setFieldValue('id', selectedIdRow)
         formik.setFieldValue('motivoDeConsultaTurno', turno.motivoDeConsultaTurno)
+        formik.setFieldValue('cancelado', turno.cancelado)
 
         EspecialistasAPI
           .getEspecialistas()
@@ -204,12 +201,12 @@ export const AltaModificacionTurno: React.FC<Props> = ({
                 {
                   !!turno &&
                   <Button
-                    color={turnoCancelado ? 'info' : 'error'}
+                    color={ formik.values.cancelado ? 'info' : 'error' }
                     size="small"
-                    onClick={toggleCancelado}
+                    onClick={ toggleCancelado }
                     variant="contained"
                   >
-                    {turnoCancelado ? 'No cancelar' : 'Cancelar turno'}
+                    { formik.values.cancelado ? 'Habilitar' : 'Cancelar' }
                   </Button>
                 }
             </DialogActions>
