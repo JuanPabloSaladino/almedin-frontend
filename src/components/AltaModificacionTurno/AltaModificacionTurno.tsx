@@ -72,17 +72,14 @@ export const AltaModificacionTurno: React.FC<Props> = ({
 
   useEffect(() => {
     if(turno){
-      EspecialistasAPI
-        .getEspecialistas()
-        .then((especialistas: IEspecialista[]) => setTurnoEspecialista(
-          dayjs(especialistas.filter(especialista => especialista.id === turno.profesionalID)[0].horarios[0]))
-        )
-
         formik.setFieldValue('socioID', turno.socioID)
         formik.setFieldValue('profesionalID', turno.profesionalID)
         formik.setFieldValue('id', selectedIdRow)
         formik.setFieldValue('motivoDeConsultaTurno', turno.motivoDeConsultaTurno)
         formik.setFieldValue('cancelado', turno.cancelado)
+
+        if(turno.fechaTurno)
+          formik.setFieldValue('fechaTurno', dayjs(turno.fechaTurno))
 
         EspecialistasAPI
           .getEspecialistas()
@@ -110,6 +107,16 @@ export const AltaModificacionTurno: React.FC<Props> = ({
         .getSocios()
         .then((sociosListados: SetStateAction<ISocio[]>) => setSocios(sociosListados))
   }, [])
+
+  useEffect(() => {
+    if(formik.values.profesionalID){
+      EspecialistasAPI
+       .getEspecialistaByID(formik.values.profesionalID)
+       .then(especialista => 
+        setTurnoEspecialista(dayjs(especialista.horarios[0]))
+       )
+    }
+  },[formik.values.profesionalID])
 
   return (
     <>

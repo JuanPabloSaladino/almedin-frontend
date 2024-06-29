@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs"
+
 export interface IEspecialista {
   id: number,
   nombreMedico: string,
@@ -7,12 +9,13 @@ export interface IEspecialista {
 }
 
 export interface ITurno {
-  fechaTurno: string,
-  profesionalID: number,
-  socioID: number,
-  motivoDeConsultaTurno: string,
+  fechaTurno: string
+  profesionalID: number
+  socioID: number
+  motivoDeConsultaTurno: string
   id: number
   cancelado: boolean
+  fechaTurno: Dayjs | null
 }
 
 export interface ISocio {

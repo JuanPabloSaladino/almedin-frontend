@@ -1,6 +1,7 @@
 import { GridColDef } from '@mui/x-data-grid'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import dayjs from 'dayjs';
 
 export const columns: GridColDef[] = [
   {
@@ -22,6 +23,13 @@ export const columns: GridColDef[] = [
     field: 'fechaTurno',
     flex: 2,
     headerName: 'Fecha',
+    renderCell: (params) => {
+      const fechaHorario = params.row.fechaTurno ? params.row.fechaTurno : null
+
+      const formattedDate = fechaHorario ? dayjs(fechaHorario).format('DD/MM/YYYY') : ''
+
+      return formattedDate
+    }
   },
   {
     field: 'disponible',
