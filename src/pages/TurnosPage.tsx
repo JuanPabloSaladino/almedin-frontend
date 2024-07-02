@@ -7,16 +7,19 @@ import { AppContext } from "../context/AppContext"
 
 const TurnosPage: React.FC = () => {
     const [turnos, setTurnos] = useState<ITurno[]>([])
-
+    
+    const { user } = useContext(AppContext);
     const { turnos: turnosContext} = useContext(AppContext) 
 
     useEffect(() => {
-      TurnosAPI
-          .getTurnos()
-          .then((turnos: ITurno[]) => {
-            setTurnos(turnos)
-          })
-    }, [turnosContext])
+        if (user) {
+            TurnosAPI
+                .getTurnosConUser(user.idUsuario, user.rol)
+                .then((turnos: ITurno[]) => {
+                    setTurnos(turnos);
+                });
+        }
+    }, [user, turnosContext]);
 
     return (
         <>

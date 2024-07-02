@@ -8,6 +8,7 @@ import './index.css';
 import TurnosPage from './pages/TurnosPage';
 import EspecialistasPage from './pages/EspecialistasPage';
 import AppContextProvider from './context/AppContext';
+import LoginPage from './pages/LoginPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,15 +17,23 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <TurnosPage />
+    element: <LoginPage />
   },
   {
     path: "/turnos",
     element: <TurnosPage />
   },
   {
+    
+
+  },
+  {
     path: "/especialistas",
     element: <EspecialistasPage />
+  },
+  {
+    path: "/login",
+    element:<LoginPage />
   }
 ]);
 

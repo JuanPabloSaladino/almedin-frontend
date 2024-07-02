@@ -23,3 +23,11 @@ export interface ISocio {
   email: string,
   id: number
 }
+
+export interface ILogin {
+  
+    idUsuario: number | string,
+    nombreUsuario: string,
+    rol: string
+  
+}

@@ -2,6 +2,11 @@ import axios, { AxiosResponse } from 'axios'
 import { ITurno } from '../types'
 
 export const TurnosAPI = {
+    getTurnosConUser: (idUsuario: number | string, rol: string) => {
+        return axios
+          .get(`http://localhost:8080/turnos/porUsuario`, {params: {idUsuario,rol}})
+            .then((response: AxiosResponse<ITurno[]>) => response.data)
+    },  
     getTurnos: () => {
         return axios
             .get(`http://localhost:8080/turnos`)

@@ -1,14 +1,19 @@
 import React, { createContext, useContext, useState } from 'react';
-import { ITurno } from '../types';
+import { ILogin, ITurno } from '../types';
 
 interface AppContextType {
   turnos: ITurno[];
   setTurnos: (turnos: ITurno[]) => void;
+  user :ILogin| null;
+  setUser: (user: ILogin|null) =>void;
+
 }
 
 interface Props {
     children: React.ReactNode
 }
+
+
 
 // Creamos el contexto con un valor inicial
 export const AppContext = createContext<AppContextType>({} as AppContextType);
@@ -16,10 +21,13 @@ export const AppContext = createContext<AppContextType>({} as AppContextType);
 // Componente proveedor que utiliza el contexto
 const AppContextProvider: React.FC<Props> = ({ children }) => {
   const [turnos, setTurnos] = useState<ITurno[]>([]);
+  const [user, setUser] = useState<ILogin|null>(null);
 
   const contextValue = {
     turnos,
-    setTurnos
+    setTurnos,
+    user,
+    setUser
   }
 
   return (
