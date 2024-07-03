@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { AltaModificacionTurno } from '../AltaModificacionTurno/AltaModificacionTurno'
 import { IFormInitialValues, Props } from './alta-turno'
 import { ITurno } from '../../types'
 import { TurnosAPI } from '../../api/turnos-api'
+import { SnackbarContext } from '../../context/SnackbarContext'
 
 export const AltaTurno: React.FC<Props> = ({
                                                    handleCloseDialog,
@@ -10,10 +11,18 @@ export const AltaTurno: React.FC<Props> = ({
                                                    selectedIdRow,
                                                  }) => {
   const [initialFormValues, setInitialFormValues] = useState<IFormInitialValues>({} as IFormInitialValues)
+  const { setOpen, setMessage} = useContext(SnackbarContext) 
 
   const handleAdd = (turno: ITurno) => {    
     TurnosAPI.createTurno(turno)
-      .then((turnoID) => console.log('Turno creado: ', turnoID));
+      .then((turnoID) => {
+        setOpen(true)
+        setMessage('El turno se creo exitosamente')
+      })
+      .catch(error => {
+        setOpen(true)
+        setMessage('Error al crear turno')
+      })
   }
 
   return (

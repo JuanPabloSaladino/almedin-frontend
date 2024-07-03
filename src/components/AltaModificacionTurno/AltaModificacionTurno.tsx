@@ -19,6 +19,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { EspecialistasAPI } from '../../api/especialistas-api'
 import { SociosAPI } from '../../api/socios-api'
 import { AppContext } from '../../context/AppContext'
+import { SnackbarContext } from '../../context/SnackbarContext'
 
 export const AltaModificacionTurno: React.FC<Props> = ({
                                                        handleCloseDialog,
@@ -33,6 +34,7 @@ export const AltaModificacionTurno: React.FC<Props> = ({
   const [profesionales, setProfesionales] = useState<IEspecialista[]>([]);
   const [socios, setSocios] = useState<ISocio[]>([]);
   const { user } = useContext(AppContext)
+  const { setOpen, setMessage} = useContext(SnackbarContext) 
 
   const { setTurnos } = useContext(AppContext) 
 
@@ -50,6 +52,10 @@ export const AltaModificacionTurno: React.FC<Props> = ({
       TurnosAPI
         .getTurnos()
         .then((turnos) => setTurnos(turnos))
+        .catch(error => {
+          setOpen(true)
+          setMessage('Error al obtener turnos')
+      })
 
       handleCloseDialog();
     }
@@ -85,6 +91,10 @@ export const AltaModificacionTurno: React.FC<Props> = ({
         EspecialistasAPI
           .getEspecialistas()
           .then((especialistas: IEspecialista[]) => setProfesionales(especialistas))
+          .catch(error => {
+            setOpen(true)
+            setMessage('Error al obtener especialistas')
+        })
     }
     
   }, [turno])
@@ -96,6 +106,10 @@ export const AltaModificacionTurno: React.FC<Props> = ({
         .then((turno: ITurno) => {
             setTurno(turno)
         })
+        .catch(error => {
+          setOpen(true)
+          setMessage('Error al obtener turno')
+      })
     }
   }, [selectedIdRow])
 
@@ -103,11 +117,19 @@ export const AltaModificacionTurno: React.FC<Props> = ({
     EspecialistasAPI
       .getEspecialistas()
       .then((especialistas: IEspecialista[]) => setProfesionales(especialistas))
+      .catch(error => {
+        setOpen(true)
+        setMessage('Error al obtener especialistas')
+    })
 
      if(user){
        SociosAPI
         .getSocios(user.idUsuario,user.rol)
         .then((sociosListados: SetStateAction<ISocio[]>) => setSocios(sociosListados))
+        .catch(error => {
+          setOpen(true)
+          setMessage('Error al obtener socios')
+      })
        } 
   
       }, 

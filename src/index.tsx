@@ -6,6 +6,7 @@ import {
 import './index.css';
 import AppContextProvider from './context/AppContext';
 import router from './router/RoutesConfig';
+import SnackbarContextProvider from './context/SnackbarContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <AppContextProvider>
-      <RouterProvider router={ router } />
+      <SnackbarContextProvider>
+        <RouterProvider router={ router } />
+      </SnackbarContextProvider>
     </AppContextProvider>
   </React.StrictMode>
 );

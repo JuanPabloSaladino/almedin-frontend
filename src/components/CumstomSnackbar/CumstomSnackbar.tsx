@@ -1,20 +1,22 @@
-import * as React from 'react'
-import Snackbar from '@mui/material/Snackbar'
-import { Props } from './custom-snackbar'
-import { useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import { Props } from './custom-snackbar';
+import { SnackbarContext } from '../../context/SnackbarContext';
 
-const CustomSnackbar: React.FC<Props> = ({ message, openSnackbar }) => {
-  const [open, setOpen] = useState(false)
+const CustomSnackbar: React.FC<Props> = ({ message }) => {
+  const { open, setOpen } = useContext(SnackbarContext)
 
   useEffect(( ) => {
-    setOpen(openSnackbar)
-  }, [openSnackbar])
+    if (message) {
+      setOpen(true)
+    }
+  }, [message, setOpen])
 
   useEffect(( ) => {
     let timeoutId: NodeJS.Timeout
 
     if (open) {
-      timeoutId = setTimeout(( ) => {
+      timeoutId = setTimeout(() => {
         setOpen(false)
       }, 5000)
     }
@@ -23,19 +25,17 @@ const CustomSnackbar: React.FC<Props> = ({ message, openSnackbar }) => {
       if (timeoutId) {
         clearTimeout(timeoutId)
       }
-    }
-  }, [open])
+    };
+  }, [open, setOpen])
 
   return (
-    <>
-      <Snackbar
-        open={open}
-        autoHideDuration={5000}
-        message={message}
-        onClose={() => setOpen(false)}
-      />
-    </>
-  )
-}
+    <Snackbar
+      open={ open }
+      autoHideDuration={ 5000 }
+      message={ message }
+      onClose={( ) => setOpen(false)}
+    />
+  );
+};
 
-export default CustomSnackbar
+export default CustomSnackbar;
