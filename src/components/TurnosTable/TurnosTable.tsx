@@ -6,16 +6,21 @@ import { TableButton } from '../TableButton/TableButton'
 import * as React from 'react'
 import { ITurno } from '../../types'
 import { columns } from '../TurnosTable/TurnosTable.constants'
-import { useState } from 'react'
+import { useState, useContext } from 'react' 
 import { ModificacionTurno } from '../ModificacionTurno/ModificacionTurno'
 import { AltaTurno } from '../AltaTurno/AltaTurno'
+import  BotonDescargarReceta  from "../BotonDescargarReceta/botonDescargarReceta"
+import { AppContext } from "../../context/AppContext"
+
+
 
 export interface Props {
   rows: ITurno[]
 }
 
 export const TurnosTable: React.FC<Props> = ({ rows }) => {
-  const [selectedIdRow, setSelectedIdRow] = useState<string>('')
+  const [selectedIdRow, setSelectedIdRow] = useState<string>('');
+  const { user } = useContext(AppContext);
 
   const handleSelectionModelChange = (selection: GridRowSelectionModel) => {
     const selectedId = (selection[0] as number).toString()
@@ -25,6 +30,9 @@ export const TurnosTable: React.FC<Props> = ({ rows }) => {
   const handleClickAway = () => {
     setSelectedIdRow('')
   }
+
+  let idUser = (user) ? user.idUsuario:"es un error perro en la linea 34 TurnosTable" ;
+
 
   return (
     <>
@@ -61,7 +69,22 @@ export const TurnosTable: React.FC<Props> = ({ rows }) => {
           <DataGrid
             autoHeight
             rows={ rows }
-            columns={ columns }
+            columns={[
+              ...columns,
+              {
+                field: 'descargar',
+                headerName: 'Descargar',
+                flex: 1,
+                renderCell: (params) => (
+                  <BotonDescargarReceta turno={params.row} idUsuario={idUser} />
+                ),
+              },
+            ]}
+
+
+
+
+
             initialState={ {
               pagination: {
                 paginationModel: { page: 0, pageSize: 5 }

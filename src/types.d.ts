@@ -31,3 +31,11 @@ export interface ILogin {
     rol: string
   
 }
+
+export interface IReceta {
+  contenido: string;
+  nombreProfesional: string;
+  nroMatriculaProfesional: string;
+  nombreSocio: string;
+  fechaCreacion: string | null;
+}
