@@ -73,7 +73,7 @@ export const TurnosTable: React.FC<Props> = ({ rows }) => {
               ...columns,
               {
                 field: 'descargar',
-                headerName: 'Descargar',
+                headerName: 'Receta',
                 flex: 1,
                 renderCell: (params) => (
                   <BotonDescargarReceta turno={params.row} idUsuario={idUser} />
