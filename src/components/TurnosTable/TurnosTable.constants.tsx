@@ -1,7 +1,18 @@
-import { GridColDef } from '@mui/x-data-grid'
+import { GridColDef, GridRenderCellParams, GridTreeNodeWithRender } from '@mui/x-data-grid'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import dayjs from 'dayjs';
+
+const renderDate = (params: GridRenderCellParams<any, any, any, GridTreeNodeWithRender>) => {
+  const fechaHorario = params.row.fechaTurno ? params.row.fechaTurno : null;
+  const formattedDate = fechaHorario ? dayjs(fechaHorario).format('DD/MM/YYYY') : '';
+  
+  return formattedDate;
+};
+
+const renderIcon = (params: GridRenderCellParams<any, any, any, GridTreeNodeWithRender>, condition: boolean) => {
+  return condition ? <RemoveCircleIcon color="error" /> : <CheckCircleIcon color="success" />;
+};
 
 export const columns: GridColDef[] = [
   {
@@ -23,32 +34,18 @@ export const columns: GridColDef[] = [
     field: 'fechaTurno',
     flex: 2,
     headerName: 'Fecha',
-    renderCell: (params) => {
-      const fechaHorario = params.row.fechaTurno ? params.row.fechaTurno : null
-
-      const formattedDate = fechaHorario ? dayjs(fechaHorario).format('DD/MM/YYYY') : ''
-
-      return formattedDate
-    }
+    renderCell: (params) => renderDate(params),
   },
   {
     field: 'disponible',
     flex: 1,
     headerName: 'Disponible',
-    renderCell: (params) => {
-      const isDisponible = params.row.socioID
-
-      return !isDisponible ? <CheckCircleIcon color="success"/> : <RemoveCircleIcon color="error"/>
-    }
+    renderCell: (params) => renderIcon(params, !params.row.socioID),
   },
   {
     field: 'cancelado',
     flex: 1,
     headerName: 'Habilitado',
-    renderCell: (params) => {
-      const isCancelado = params.row.cancelado
-
-      return !isCancelado ? <CheckCircleIcon color="success"/> : <RemoveCircleIcon color="error"/>
-    }
-  }
-]
+    renderCell: (params) => renderIcon(params, params.row.cancelado),
+  },
+];
