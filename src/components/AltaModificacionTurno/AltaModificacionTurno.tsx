@@ -32,6 +32,7 @@ export const AltaModificacionTurno: React.FC<Props> = ({
   const [turno, setTurno] = useState<ITurno>()
   const [profesionales, setProfesionales] = useState<IEspecialista[]>([]);
   const [socios, setSocios] = useState<ISocio[]>([]);
+  const { user } = useContext(AppContext)
 
   const { setTurnos } = useContext(AppContext) 
 
@@ -103,10 +104,15 @@ export const AltaModificacionTurno: React.FC<Props> = ({
       .getEspecialistas()
       .then((especialistas: IEspecialista[]) => setProfesionales(especialistas))
 
-      SociosAPI
-        .getSocios()
+     if(user){
+       SociosAPI
+        .getSocios(user.idUsuario,user.rol)
         .then((sociosListados: SetStateAction<ISocio[]>) => setSocios(sociosListados))
-  }, [])
+       } 
+  
+      }, 
+  
+  [])
 
   useEffect(() => {
     if(formik.values.profesionalID){
