@@ -20,7 +20,7 @@ const LoginComponent: React.FC = () => {
 
       if (response) {
         setUser(response)
-        navigate('/turnos'); // Redirige al usuario a /turnos
+        navigate('/turnos');
       } else {
         throw new Error("PARO EN EL COMPONENTE LOGIN pq response es nulo");
       }

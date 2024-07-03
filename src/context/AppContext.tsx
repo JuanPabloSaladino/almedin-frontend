@@ -15,10 +15,8 @@ interface Props {
 
 
 
-// Creamos el contexto con un valor inicial
 export const AppContext = createContext<AppContextType>({} as AppContextType);
 
-// Componente proveedor que utiliza el contexto
 const AppContextProvider: React.FC<Props> = ({ children }) => {
   const [turnos, setTurnos] = useState<ITurno[]>([]);
   const [user, setUser] = useState<ILogin|null>(null);
