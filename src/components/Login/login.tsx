@@ -9,7 +9,7 @@ const LoginComponent: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setUser } = useContext(AppContext);
+  const { setUser } = useContext(AppContext); 
 
   const handleLogin = async () => {
     try {
@@ -19,13 +19,13 @@ const LoginComponent: React.FC = () => {
       console.log("Respuesta del backend:", response);
 
       if (response) {
-        setUser(response)
+        setUser(response); // CAMBIO: Guardo usuario en el contexto (y localStorage) (f5)
         navigate('/turnos');
       } else {
-        throw new Error("PARO EN EL COMPONENTE LOGIN pq response es nulo");
+        throw new Error("");
       }
     } catch (err) {
-      setError('Error al iniciar sesión. Por favor, verifica tus credenciales e intenta nuevamente.' + err);
+      setError('Error al iniciar sesión. Por favor, verifica tus credenciales e intenta nuevamente.');
     }
   };
 
@@ -79,4 +79,3 @@ const LoginComponent: React.FC = () => {
 };
 
 export default LoginComponent;
-
