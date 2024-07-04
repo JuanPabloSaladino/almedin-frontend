@@ -15,7 +15,7 @@ const BotonDescargarReceta: React.FC<BotonDescargarRecetaProps> = ({ turno, idUs
     const [snackbarMessage, setSnackbarMessage] = useState('');
   
     const handleDownload = async () => {
-      console.log('handleDownload called');
+      console.log('descarga llamada');
       console.log('turno:', turno);
       console.log('idUsuario:', idUsuario);
       try {
