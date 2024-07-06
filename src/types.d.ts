@@ -16,6 +16,7 @@ export interface ITurno {
   id: number
   cancelado: boolean
   fechaTurno: Dayjs | null
+  tieneReceta: boolean
 }
 
 export interface ISocio {
